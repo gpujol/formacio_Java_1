@@ -1,0 +1,57 @@
+BD - Oracle
+###########
+
+Referencias:
+	https://docs.oracle.com
+	http://www.techonthenet.com/
+	http://www.techonthenet.com/oracle/select.php
+	https://docs.oracle.com/cd/E11882_01/server.112/e41084/queries.htm#SQLRF007
+	
+
+Guardad las sentencias SQL en ficheros separados, numerados por ejercicio:
+	ex1.sql
+	ex2.sql
+	...
+
+Cuando terminéis, poned-los en una carpeta, comprimidla en un zip, poned vuestro nombre al fichero y enviadlo a gpujol@indra.es
+
+Schema:
+	EXEMPLE_SCHEMA
+Pass:
+	EXEMPLE_SCHEMA
+
+Ejercicios
+----------
+1. Cread la secuencia para la tabla PRODUCT
+
+2. Utilizad esa secuencia para insertar 3 productos nuevos
+	- Después de los tres inserts iniciales, reiniciad la secuencia y volved a ejecutar los tres inserts
+
+3. Borrad el contenido de la tabla PRODUCT
+
+4. Borrad la tabla PRODUCT
+
+5. Cread un bloque PL/SQL que os permita:
+	Primero:
+		- Buscar el trabajador con más clientes
+		- Buscar el cliente de ese trabajador con más productos relacionados
+		- Mostrar el nombre del cliente
+	
+	Segundo:
+		- Mostrar, para cada trabajador:
+			- Nombre del trabajador: <NOMBRE>
+			- Apellido del trabajador: <APELLIDO>
+			- Lista de clientes:
+				- <cliente1>
+				- <cliente2>
+				...
+			
+	Tercero:
+		- Hacer lo mismo, pero con cursores con parámetros
+
+6. La empresa quiere tener disponibles como datos de empleado, el porcentaje de clientes que gestiona ese empleado del total de la compañía, y como dato de cliente el porcentaje de productos que compra del total que ofrece la compañía.
+
+Quieren una validez de datos diaria y quieren actualizar los datos con un bloque PLSQL.
+	- Necesitan un campo PERCENT_CUSTOMER en la tabla EMPLOYEE
+	- Necesitan un campo PRECENT_PRODUCT en la tabla CUSTOMER
+	- Necesitan un bloque PLSQL que calcule y actualice los datos diariamente

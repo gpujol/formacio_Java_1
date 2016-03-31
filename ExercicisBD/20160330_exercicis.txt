@@ -1,0 +1,58 @@
+BD - Oracle
+###########
+
+Referencias:
+	https://docs.oracle.com
+	http://www.techonthenet.com/
+	http://www.techonthenet.com/oracle/select.php
+	https://docs.oracle.com/cd/E11882_01/server.112/e41084/queries.htm#SQLRF007
+	
+
+Guardad las sentencias SQL en ficheros separados, numerados por ejercicio:
+	ex1.sql
+	ex2.sql
+	...
+
+Cuando terminéis, poned-los en una carpeta, comprimidla en un zip, poned vuestro nombre al fichero y enviadlo a gpujol@indra.es
+
+Schema:
+	EXEMPLE_SCHEMA
+Pass:
+	EXEMPLE_SCHEMA
+
+Ejercicios en clase
+-------------------
+1. Escribid las sentencias SQL que os permitan recuperar:
+	- Todos los nombres de los trabajadores
+		- Ordenados por fecha de nacimiento
+		- Ordenados por nombre
+	- Todos los nombres de los clientes
+	- Todos los nombres de los clientes, con el nombre del trabajador que tiene asignado cada cliente
+		(de dos formas distintas como mínimo)
+
+2. Escribid las sentencias SQL que os permitan recuperar:
+	- Los trabajadores y qué clientes tienen cada uno
+		- Con un literal de 'No tiene clientes' en caso que no tenga
+	- Los trabajadores y cuántos clientes tiene cada uno
+		- Con un literal de 'No tiene clientes' en caso que no tenga
+	- Cuál es el máximo de clientes que tiene un trabajador
+
+Ejercicios fuera de clase
+-------------------------
+
+3. Escribid la sentencia SQL que os permita calcular cuál es el trabajador con el máximo número de clientes, y cuántos clientes tiene
+	
+4. Escribid en una sola query el sql necesario para despedir a los trabajadores que no tienen ningún cliente:
+	- Calcular qué trabajadores no tienen clientes
+	- Borrarlos de la BD
+
+5. Recuperad el estado inicial de la BD con el script proporcionado
+
+6. Cread los scripts para añadir el campo SURNAME a EMPLOYEE y CUSTOMER, de tipo VARCHAR2(50 BYTES)
+
+7. Cread los scripts para actualizar la información necesaria de los empleados y clientes, para que los campos no tengan valor nulo
+
+8. Cread los scripts necesarios para añadir las dos tablas que faltan al schema para igualarlo con el modelo de la imagen
+
+9. Inicializad las dos tablas con al menos 10 registros cada una.
+	- TIP: Se pueden utilizar secuencias
