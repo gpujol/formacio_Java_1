@@ -28,44 +28,81 @@ INSERT INTO PRODUCT_CUSTOMER(PRODUCT_ID, CUSTOMER_ID, CREATION_DATE) VALUES(SEQ_
 
 SET SERVEROUTPUT ON
 DECLARE 
-  emp_id VARCHAR2(20);
+
   cli_nom VARCHAR(20);
   cli_id VARCHAR(20);
-BEGIN
-  SELECT E.ID INTO emp_id
-  FROM EMPLOYEE E
-  LEFT JOIN CUSTOMER C 
-    ON(E.ID = C.EMPLOYEE_ID)
-  GROUP BY E.ID
-  HAVING COUNT(C.ID)= (
-    SELECT MAX(COUNT(C.ID))
-    FROM CUSTOMER C
-    LEFT JOIN EMPLOYEE E
-      ON(C.EMPLOYEE_ID = E.ID)
-    GROUP BY E.ID
-  );
-  DBMS_OUTPUT.PUT_LINE('Empleat amb més clients, té un ID: ' || emp_id);
-
-  SELECT C.ID INTO cli_id
-  FROM CUSTOMER C
-  LEFT JOIN EMPLOYEE E
-    ON(C.EMPLOYEE_ID = E.ID)
-  INNER JOIN PRODUCT_CUSTOMER PC
-    ON(C.ID = PC.CUSTOMER_ID)
-  WHERE E.ID=2
-  GROUP BY C.ID
-  HAVING COUNT(C.ID) = (
-    SELECT MAX(COUNT(C.ID))
+  
+  CURSOR emp_max_cur IS
+    SELECT E.ID, E.NAME
+    FROM EMPLOYEE E
+    LEFT JOIN CUSTOMER C 
+      ON(E.ID = C.EMPLOYEE_ID)
+    GROUP BY E.ID, E.NAME
+    HAVING COUNT(C.ID)= (
+      SELECT MAX(COUNT(C.ID))
+      FROM CUSTOMER C
+      LEFT JOIN EMPLOYEE E
+        ON(C.EMPLOYEE_ID = E.ID)
+      GROUP BY E.ID
+    );
+  
+  CURSOR clientes_max_product_cur (id_emp NUMBER) IS
+    SELECT C.NAME
     FROM CUSTOMER C
     LEFT JOIN EMPLOYEE E
       ON(C.EMPLOYEE_ID = E.ID)
     INNER JOIN PRODUCT_CUSTOMER PC
       ON(C.ID = PC.CUSTOMER_ID)
-    WHERE E.ID=2
-    GROUP BY C.ID
-  );
-  DBMS_OUTPUT.PUT_LINE('Client amb és productes, té un ID: ' || cli_id);
+    WHERE E.ID=id_emp
+    GROUP BY C.ID, C.NAME
+    HAVING COUNT(C.ID) = (
+      SELECT MAX(COUNT(C.ID))
+      FROM CUSTOMER C
+      LEFT JOIN EMPLOYEE E
+        ON(C.EMPLOYEE_ID = E.ID)
+      INNER JOIN PRODUCT_CUSTOMER PC
+        ON(C.ID = PC.CUSTOMER_ID)
+      WHERE E.ID=id_emp
+      GROUP BY C.ID
+    );
   
+  TYPE EMP_AUX_TYPE IS RECORD (
+    emp_id NUMBER(8),
+    emp_name VARCHAR2(50)
+  );
+  
+  EMP_AUX EMP_AUX_TYPE;
+  
+BEGIN
+  
+  OPEN emp_max_cur;
+  LOOP
+  
+    FETCH emp_max_cur INTO EMP_AUX;
+    EXIT WHEN emp_max_cur%NOTFOUND;
+    
+    DBMS_OUTPUT.PUT_LINE('Empleat amb més clients, té un ID: ' || EMP_AUX.emp_id);  
+  
+    IF (EMP_AUX.emp_id IS NOT NULL) THEN
+      OPEN clientes_max_product_cur (EMP_AUX.emp_id);
+      LOOP
+        FETCH clientes_max_product_cur INTO cli_nom;
+        EXIT WHEN clientes_max_product_cur%NOTFOUND;
+        
+        DBMS_OUTPUT.PUT_LINE('El nom del client amb més productes és: ' || cli_nom);
+        
+      END LOOP;
+      CLOSE clientes_max_product_cur;
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('No hi ha empleats');
+    END IF;
+  
+  END LOOP;
+  CLOSE emp_max_cur;
+  
+  
+ -- DBMS_OUTPUT.PUT_LINE('El nom del client amb més productes és: ' || cli_nom);
+  /*
   SELECT C.NAME INTO cli_nom
   FROM CUSTOMER C
   LEFT JOIN EMPLOYEE E
@@ -85,4 +122,5 @@ BEGIN
     GROUP BY C.ID
   );
   DBMS_OUTPUT.PUT_LINE('El nom del client amb més productes és: ' || cli_nom);
+  */
 END;
