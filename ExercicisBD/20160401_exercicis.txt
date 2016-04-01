@@ -1,0 +1,42 @@
+BD - Oracle
+###########
+
+Referencias:
+	https://docs.oracle.com
+	http://www.techonthenet.com/
+	http://www.techonthenet.com/oracle/select.php
+	https://docs.oracle.com/cd/E11882_01/server.112/e41084/queries.htm#SQLRF007
+
+Ejercicios
+----------
+1. La empresa quiere tener disponibles como datos de empleado, el porcentaje de clientes que gestiona ese empleado del total de la compañía, y como dato de cliente el porcentaje de productos que compra del total que ofrece la compañía. También quieren como dato la fecha del cálculo del porcentaje.
+
+Quieren actualizar los datos con un bloque PLSQL.
+	- Necesitan un campo PERCENT_CUSTOMER en la tabla EMPLOYEE
+	- Necesitan un campo PERCENT_DATE en la tabla EMPLOYEE
+	- Necesitan un campo PRECENT_PRODUCT en la tabla CUSTOMER
+	- Necesitan un campo PRECENT_DATE en la tabla CUSTOMER
+	- Necesitan un bloque PLSQL que calcule y actualice los datos
+		- Para el bloque PLSQL os propongo tres aproximaciones:
+			a. Primera aproximación
+				- Definid un bloque PLSQL, con dos cursores EMP_CUR y CUST_CUR
+				- Con un bucle, para cada empleado, calculad el porcentaje de clientes que tiene
+				- Con ese dato y la fecha de ejecución, actualizad el dato del empleado
+				- A continuación, con otro bucle, para cada cliente, calculad el porcentaje de productos que tiene asociados
+				- Con ese dato y la fecha de ejecución, actualizad el dato del cliente
+			b. Segunda aproximación
+				- Definid un package PACK_EMPLOYEE y otro PACK_CUSTOMER.
+				- Definid en estos package una función en cada uno para calcular el porcentaje de clientes que tiene un empleado, y el porcentaje de productos que tiene asociados un cliente respectivamente. Las funciones deben tener como parámetro de entrada el ID del empleado y cliente respectivamente.
+				- Partiendo de la primera aproximación, quitad del bloque PLSQL los cálculos de porcentaje y utilizad las nuevas funciones
+			c. Tercera aproximación
+				- Definid en los packages que habéis creado un procedure en cada uno que dado un empleado, o un cliente respectivamente, actualice el porcentaje y la fecha.
+				- Estos procedures deben recibir como único parámetro el ID del empleado o del cliente respectivamente, y deben utilizar internamente la función creada en la segunda aproximación para calcular el porcentaje.
+				- Partiendo de la segunda aproximación, quitad del bloque PLSQL los UPDATES y utilizad los PROCEDURES que acabáis de crear.
+			d. Cuarta aproximación
+				- Cread un procedure ACTUALIZA_PORCENTAJES_EMPRESA (sin package) que contenga el PLSQL de la tercera aproximación.
+				- Si todo ha ido bien, deberíais tener un procedure ACTUALIZA_PORCENTAJES_EMPRESA que recorre todos los empleados de la empresa, y utilizando el package PACK_EMPLOYEE actualiza sus porcentajes y fechas, y después recorre los clientes de la empresa, y utilizando el package PACK_CUSTOMER actualiza sus porcentajes y fechas.
+			
+	Enviadme:
+		- El código para crear los campos nuevos
+		- El código de los dos PACKAGES: PACK_EMPLOYEE y PACK_CUSTOMER
+		- El código del procedure ACTUALIZA_PORCENTAJES_EMPRESA
