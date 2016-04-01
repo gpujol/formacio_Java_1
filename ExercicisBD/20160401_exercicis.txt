@@ -36,7 +36,17 @@ Quieren actualizar los datos con un bloque PLSQL.
 				- Cread un procedure ACTUALIZA_PORCENTAJES_EMPRESA (sin package) que contenga el PLSQL de la tercera aproximación.
 				- Si todo ha ido bien, deberíais tener un procedure ACTUALIZA_PORCENTAJES_EMPRESA que recorre todos los empleados de la empresa, y utilizando el package PACK_EMPLOYEE actualiza sus porcentajes y fechas, y después recorre los clientes de la empresa, y utilizando el package PACK_CUSTOMER actualiza sus porcentajes y fechas.
 			
-	Enviadme:
+	Preparad los siguientes SCRIPTS:
 		- El código para crear los campos nuevos
 		- El código de los dos PACKAGES: PACK_EMPLOYEE y PACK_CUSTOMER
 		- El código del procedure ACTUALIZA_PORCENTAJES_EMPRESA
+
+2. Ejercicio extra:
+	Cread el procedure INITIALIZE con un parámetro de entrada X que sea un NUMBER.
+		- Este procedure debe crear UN EMPLEADO, UN CLIENTE (asociado con el empleado que acabo de crear), UN PRODUCTO, y asociar el PRODUCTO que acabo de crear con el cliente CREADO.
+		- Debe realizar este paso X veces.
+		- Los nombres deben ser "dinámicos". No sirve que siempre tengan el nombre "cliente" o "empleado", debe haber un componente diferente.
+		- INITIALIZE(2) debería crear, por ejemplo:
+			- Empleado 1 <- Cliente 1 <-P_C-> Producto 1
+			- Empleado 2 <- Cliente 2 <-P_C-> Producto 2
+			(* me he tomado la licencia de usar <- -> para simbolizar FK)
