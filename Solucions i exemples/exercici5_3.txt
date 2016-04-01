@@ -1,0 +1,44 @@
+/*			
+	Tercero:
+		- Hacer lo mismo, pero con cursores con parámetros
+*/  
+
+SET SERVEROUTPUT ON
+DECLARE
+  CURSOR CUR_EMP IS
+    SELECT E.ID, E.NAME, E.SURNAME
+    FROM EMPLOYEE E;
+    
+  REG_ID EMPLOYEE.ID%TYPE;
+  REG_NAME EMPLOYEE.NAME%TYPE;
+  REG_SURN EMPLOYEE.SURNAME%TYPE;
+  REG_CLI_NAME CUSTOMER.NAME%TYPE;
+  
+  CURSOR CUR_EMP_CLIENTS(ID_EMP EMPLOYEE.ID%TYPE) IS --Este es el cursor con parámetros
+    SELECT C.NAME
+    FROM CUSTOMER C
+    INNER JOIN EMPLOYEE E
+      ON(C.EMPLOYEE_ID = E.ID)
+    WHERE E.ID=ID_EMP;
+    
+BEGIN
+  OPEN CUR_EMP;
+  LOOP
+    FETCH CUR_EMP INTO REG_ID, REG_NAME, REG_SURN;
+      EXIT WHEN CUR_EMP%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE(' ');
+      DBMS_OUTPUT.PUT_LINE('Nombre del trabajador: ' || REG_NAME);
+      DBMS_OUTPUT.PUT_LINE('Apellido del trabajador: ' || REG_SURN);
+      
+      OPEN CUR_EMP_CLIENTS(REG_ID);
+      LOOP
+        FETCH CUR_EMP_CLIENTS INTO REG_CLI_NAME;
+          
+          EXIT WHEN CUR_EMP_CLIENTS%NOTFOUND;
+          DBMS_OUTPUT.PUT_LINE('Cliente: ' || REG_CLI_NAME);
+          
+      END LOOP;  
+      CLOSE CUR_EMP_CLIENTS;
+  END LOOP;
+  CLOSE CUR_EMP;
+END;
