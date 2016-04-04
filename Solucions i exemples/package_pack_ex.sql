@@ -1,6 +1,6 @@
 create or replace PACKAGE pack_ex AS
   
-  PROCEDURE xxxx (fecha DATE);
+  PROCEDURE xxxx2 (fecha DATE);
   
   FUNCTION avui RETURN DATE;
     
