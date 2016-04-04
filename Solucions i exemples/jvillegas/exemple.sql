@@ -38,7 +38,7 @@ CREATE OR REPLACE PACKAGE BODY pack_emp AS
           WHERE E.ID=REG_ID;
           
           UPDATE EMPLOYEE SET PERCENT_CUSTOMER=PERC_EMP WHERE ID=REG_ID;
-          UPDATE EMPLOYEE SET FECHA=FECHA_HOY WHERE ID=REG_ID;
+          UPDATE EMPLOYEE SET PERCENT_DATE=FECHA_HOY WHERE ID=REG_ID;
           
           DBMS_OUTPUT.PUT_LINE(' ');
           DBMS_OUTPUT.PUT_LINE('ID: ' || REG_ID || '  ----  Nombre trabajador: ' || REG_NAME);
@@ -47,11 +47,14 @@ CREATE OR REPLACE PACKAGE BODY pack_emp AS
       END LOOP;  
       CLOSE CUR_EMP;
       COMMIT;
+      
+      RETURN 'OK';
+      
     END;
 END pack_emp;
 /
 
 SET SERVEROUTPUT ON
 BEGIN
-  pack_emp.retPorcEmp;
-END
+  DBMS_OUTPUT.PUT_LINE(pack_emp.retPorcEmp);
+END;
